@@ -1,0 +1,133 @@
+<div class="page">
+  <header class="invite">
+    <div class="invite__actions">
+      <!-- <span class="badge">Invitacion especial</span> -->
+      <div class="actions">
+        <button class="chip" type="button" (click)="copyInvite()">Copiar datos</button>
+        <button class="chip chip--gold" type="button" (click)="openWhatsApp()">Enviar por Whats</button>
+        <button class="chip chip--dark" type="button" (click)="addToCalendar()">Agregar al calendario</button>
+      </div>
+    </div>
+
+    <div class="invite__top">
+      <div class="medallion">
+        <img src="karla-communion.svg" alt="Simbolo de primera comunion" />
+      </div>
+      <div class="floral floral--left"></div>
+      <div class="floral floral--right"></div>
+    </div>
+
+    <p class="invite__eyebrow">Invitacion doble</p>
+    <h1>Primera Comunion y Bautizo</h1>
+    <p class="invite__names">Karla Canedo Meza & Aristeo Canedo Meza</p>
+    <p class="invite__date">14 de marzo de 2026</p>
+
+    <p class="invite__subtitle">
+      Con alegria te invitamos a acompañarnos en un dia lleno de fe, familia y una mesa bien servida.
+    </p>
+
+    <div class="invite__quote">
+      Que la luz de Dios y su Espiritu Santo nos acompañen y brillen por siempre
+      en nuestro corazon.
+    </div>
+
+    <div class="hero-illustration">
+      <img src="ban.png" alt="Ilustracion de primera comunion y bautizo" />
+    </div>
+
+    <div class="countdown">
+      <p class="countdown__title">Falta para el 14 de marzo de 2026</p>
+      <div class="countdown__grid">
+        <div class="countdown__card">
+          <span class="countdown__number">{{ days }}</span>
+          <span class="countdown__label">Dias</span>
+        </div>
+        <div class="countdown__card">
+          <span class="countdown__number">{{ hours }}</span>
+          <span class="countdown__label">Horas</span>
+        </div>
+        <div class="countdown__card">
+          <span class="countdown__number">{{ minutes }}</span>
+          <span class="countdown__label">Minutos</span>
+        </div>
+        <div class="countdown__card">
+          <span class="countdown__number">{{ seconds }}</span>
+          <span class="countdown__label">Segundos</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="sections">
+    <section class="section section--communion">
+      <div class="section__header">
+        <p class="section__tag">Primera Comunion</p>
+        <h2>Karla Canedo Meza</h2>
+      </div>
+      <div class="section__content">
+        <div class="section__photo">
+          <img src="karla.png" alt="Ilustracion de nina en su primera comunion" />
+        </div>
+        <div class="section__info">
+          <p class="section__text">
+            Te invitamos a celebrar este momento de fe y gratitud. Tu presencia
+            sera una bendicion para nuestra familia.
+          </p>
+          <div class="info-grid">
+            <div>
+              <span class="label">Fecha</span>
+              <span class="value">14 de marzo de 2026</span>
+            </div>
+            <div>
+              <span class="label">Misa</span>
+              <span class="value">10:00 a. m.</span>
+              <span class="value">Parroquia del Senor de la Paz</span>
+            </div>
+          </div>
+          <div class="info-actions">
+            <button class="ghost" type="button" (click)="openMapMisa()">Ver mapa (misa)</button>
+            <button class="solid" type="button" (click)="copyMisa()">Copiar ubicacion</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--baptism">
+      <div class="section__header">
+        <p class="section__tag">Bautizo</p>
+        <h2>Aristeo Canedo Meza</h2>
+      </div>
+      <div class="section__content">
+        <div class="section__photo">
+          <img src="aris.png" alt="Ilustracion de nino en su bautizo" />
+        </div>
+        <div class="section__info">
+          <p class="section__text">
+            Celebramos el inicio de su camino en la fe. Gracias por compartir
+            este dia tan especial con nosotros.
+          </p>
+          <div class="info-grid">
+            <div>
+              <span class="label">Comida</span>
+              <span class="value">Casa Torre Eifel #1</span>
+              <span class="value">Colonia Bellas Torres</span>
+            </div>
+            <div>
+              <span class="label">Direccion</span>
+              <span class="value">Torre Eifel #1, Colonia Bellas Torres</span>
+            </div>
+          </div>
+          <div class="info-actions">
+            <button class="ghost" type="button" (click)="openMapComida()">Ver mapa (comida)</button>
+            <button class="solid" type="button" (click)="copyComida()">Copiar direccion</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Con carino, te esperamos</p>
+    <p class="tip">Tip: si abres esta invitacion en tu celular, puedes compartirla directo por WhatsApp.</p>
+  </footer>
+</div>
