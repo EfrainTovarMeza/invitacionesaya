@@ -156,6 +156,16 @@
   color: #5f4c34;
 }
 
+.invite__date2 {
+  max-width: 60%;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  margin: 0 0 1.2rem;
+  color: #000000;
+}
+
 .invite__subtitle {
   max-width: 660px;
   margin: 0 auto 1.2rem;

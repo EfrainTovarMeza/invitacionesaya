@@ -20,6 +20,8 @@ export class AppComponent implements OnInit, OnDestroy {
   minutes = 0;
   seconds = 0;
   private timer?: number;
+  speechText = '';
+  names = '';
   texto = 'Hola. Este es un ejemplo de lectura más natural. Habla con pausas, y sin correr demasiado.';
 
   public GUEST_LIST: GuestItem[] = [
@@ -75,8 +77,8 @@ export class AppComponent implements OnInit, OnDestroy {
     },
     {
       id: 11,
-      name: 'Chay y David',
-      slug: 'chay-y-david'
+      name: 'Chany y David',
+      slug: 'chany-y-david'
     },
     {
       id: 12,
@@ -85,8 +87,8 @@ export class AppComponent implements OnInit, OnDestroy {
     },
     {
       id: 13,
-      name: 'Elia y Chispas',
-      slug: 'elia-y-chispas'
+      name: 'Elba y Chispas',
+      slug: 'elba-y-chispas'
     },
     {
       id: 14,
@@ -170,23 +172,28 @@ export class AppComponent implements OnInit, OnDestroy {
     },
     {
       id: 30,
-      name: 'Karla Y Gonzalo',
+      name: 'Karla y Gonzalo',
       slug: 'karla-y-gonzalo'
     },
     {
       id: 31,
-      name: 'Efraín y Belén',
+      name: 'Belén y Efraín',
       slug: 'efrain-y-belen'
     },
     {
       id: 32,
-      name: 'Dario y Liz',
+      name: 'Liz y Dario',
+      slug: 'dario-y-liz'
+    },
+    {
+      id: 33,
+      name: 'Paty y Familia Vega',
       slug: 'dario-y-liz'
     }
   ];
 
-  misaAddress = 'Parroquia del Senor de la Paz';
-  comidaAddress = 'Casa Torre Eifel #1, Colonia Bellas Torres';
+  misaAddress = 'Parroquia del Senor de la Paz, Ecuandureo Michoacán';
+  comidaAddress = 'Casa Torre Eifel #1, Colonia Bellas Torres, Ecuandureo Michoacán';
   private routeSub?: Subscription;
 
   constructor(private readonly route: ActivatedRoute) {}
@@ -197,11 +204,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this.routeSub = this.route.paramMap.subscribe((paramMap) => {
       setTimeout(() => {
         const param = paramMap.get('encodedNames');
-        console.log(param);
         
         if(param) {
-          const speechText = this.buildSpeechTextFromParam(paramMap.get('encodedNames')) + ' a compartir con nosotros este día tan especial, lleno de fe, amor y bendiciones, en la celebración de su Bautizo y Primera Comunión de Aristeo y Karla. ';
-          this.leerTexto(speechText);
+          const idParam = Number(param);
+          const guest = this.GUEST_LIST.find(item => item.id === idParam);
+          this.names = guest?.name || '';
+          this.speechText = 'Hola, ' + this.names + '. Te invitamos a compartir con nosotros este día tan especial, lleno de fe, amor y bendiciones. Acompáñanos en la celebración del Bautizo y la Primera Comunión de Aristeo y Karla.';
+          this.leerTexto(this.speechText);
         } else {
           this.leerTexto(this.texto);
         }
@@ -285,8 +294,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     const mensaje = new SpeechSynthesisUtterance(texto);
     mensaje.lang = 'es-MX';
-    mensaje.rate = 1.3;
-    mensaje.pitch = 1;
+    mensaje.rate = 1;
+    mensaje.pitch = 0.7;
     mensaje.volume = 19;
 
     window.speechSynthesis.cancel();
