@@ -35,6 +35,12 @@
       <p class="invite__date2">Invitación especial para: {{ names }}</p>
     </div>
 
+    @if (showPlayAudioButton) {
+      <div class="invite__audio-action">
+        <button class="chip chip--gold" type="button" (click)="playPendingAudio()">Reproducir mensaje</button>
+      </div>
+    }
+
 
     <div class="hero-illustration">
       <img src="ban.png" alt="Ilustracion de primera comunion y bautizo" />

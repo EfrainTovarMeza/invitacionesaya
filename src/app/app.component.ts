@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
     id: number;
     name: string;
     slug: string;
+    audioFile: string;
   }
 @Component({
   selector: 'app-root',
@@ -23,172 +24,221 @@ export class AppComponent implements OnInit, OnDestroy {
   speechText = '';
   names = '';
   texto = 'Hola. Este es un ejemplo de lectura más natural. Habla con pausas, y sin correr demasiado.';
+  private audioPlayer?: HTMLAudioElement;
+  pendingAudioFile: string | null = null;
+  private pendingFallbackText: string | null = null;
+  showPlayAudioButton = false;
+  private readonly unlockAudio = () => {
+    if (!this.pendingAudioFile) {
+      return;
+    }
+
+    const audioFile = this.pendingAudioFile;
+    const fallbackText = this.pendingFallbackText ?? this.texto;
+    this.pendingAudioFile = null;
+    this.pendingFallbackText = null;
+    this.showPlayAudioButton = false;
+    this.reproducirAudio(audioFile, fallbackText);
+  };
 
   public GUEST_LIST: GuestItem[] = [
     {
       id: 1,
       name: 'Estefanía Méndez y Luis Armando López Padrinos de Aristeo',
-      slug: 'estefania-mendez-y-luis-armando-lopez-padrinos-de-aristeo'
+      slug: 'estefania-mendez-y-luis-armando-lopez-padrinos-de-aristeo',
+      audioFile: 'uno.mp3'
     },
     {
       id: 2,
       name: 'Yolanda Alvarado Madrina de Karla',
-      slug: 'yolanda-alvarado-madrina-de-karla'
+      slug: 'yolanda-alvarado-madrina-de-karla',
+      audioFile: 'dos.mp3'
     },
     {
       id: 3,
-      name: 'Jarely y Jorge',
-      slug: 'jarely-y-jorge'
+      name: 'Yaqui y Jorge',
+      slug: 'yaqui-y-jorge',
+      audioFile: 'tres.mp3'
     },
     {
       id: 4,
       name: 'Sandra y Pepe Mariles',
-      slug: 'sandra-y-pepe-mariles'
+      slug: 'sandra-y-pepe-mariles',
+      audioFile: 'cuatro.mp3'
     },
     {
       id: 5,
       name: 'Mary Cruz y Edgar Ventura',
-      slug: 'mary-cruz-y-edgar-ventura'
+      slug: 'mary-cruz-y-edgar-ventura',
+      audioFile: 'cinco.mp3'
     },
     {
       id: 6,
       name: 'Alejandra y Edgar',
-      slug: 'alejandra-y-edgar'
+      slug: 'alejandra-y-edgar',
+      audioFile: 'seis.mp3'
     },
     {
       id: 7,
       name: 'Rosita y Mariela',
-      slug: 'rosita-y-mariela'
+      slug: 'rosita-y-mariela',
+      audioFile: 'siete.mp3'
     },
     {
       id: 8,
       name: 'Amigo Joselito',
-      slug: 'amigo-joselito'
+      slug: 'amigo-joselito',
+      audioFile: 'ocho.mp3'
     },
     {
       id: 9,
       name: 'Maestra Irandi',
-      slug: 'maestra-irandi'
+      slug: 'maestra-irandi',
+      audioFile: 'nueve.mp3'
     },
     {
       id: 10,
       name: 'Maestra Liz',
-      slug: 'maestra-liz'
+      slug: 'maestra-liz',
+      audioFile: 'diez.mp3'
     },
     {
       id: 11,
       name: 'Chany y David',
-      slug: 'chany-y-david'
+      slug: 'chany-y-david',
+      audioFile: 'once.mp3'
     },
     {
       id: 12,
       name: 'Ana y Marcos',
-      slug: 'ana-y-marcos'
+      slug: 'ana-y-marcos',
+      audioFile: 'doce.mp3'
     },
     {
       id: 13,
       name: 'Elba y Chispas',
-      slug: 'elba-y-chispas'
+      slug: 'elba-y-chispas',
+      audioFile: 'trece.mp3'
     },
     {
       id: 14,
       name: 'Padre Cipriano',
-      slug: 'padre-cipriano'
+      slug: 'padre-cipriano',
+      audioFile: 'catorce.mp3'
     },
     {
       id: 15,
       name: 'Padre Juan Martín',
-      slug: 'padre-juan-martin'
+      slug: 'padre-juan-martin',
+      audioFile: 'quince.mp3'
     },
     {
       id: 16,
       name: 'Madre Anel',
-      slug: 'madre-anel'
+      slug: 'madre-anel',
+      audioFile: 'diezseis.mp3'
     },
     {
       id: 17,
       name: 'Madre Irma',
-      slug: 'madre-irma'
+      slug: 'madre-irma',
+      audioFile: 'diezsiete.mp3'
     },
     {
       id: 18,
       name: 'Madre Paty',
-      slug: 'madre-paty'
+      slug: 'madre-paty',
+      audioFile: 'diexocho.mp3'
     },
     {
       id: 19,
       name: 'Neto y Adriana',
-      slug: 'neto-y-adriana'
+      slug: 'neto-y-adriana',
+      audioFile: 'dieznueve.mp3'
     },
     {
       id: 20,
       name: 'Amigo nery',
-      slug: 'amigo-nery'
+      slug: 'amigo-nery',
+      audioFile: 'veinte.mp3'
     },
     {
       id: 21,
       name: 'Hany y chole',
-      slug: 'hany-y-chole'
+      slug: 'hany-y-chole',
+      audioFile: 'veinteuno.mp3'
     },
     {
       id: 22,
       name: 'Liz y sus Papás',
-      slug: 'liz-y-sus-papas'
+      slug: 'liz-y-sus-papas',
+      audioFile: 'veintedos.mp3'
     },
     {
       id: 23,
       name: 'Consuelo y Enrique',
-      slug: 'consuelo-y-enrique'
+      slug: 'consuelo-y-enrique',
+      audioFile: 'veintetres.mp3'
     },
     {
       id: 24,
       name: 'Familia Canedo Andrade',
-      slug: 'familia-canedo-andrade'
+      slug: 'familia-canedo-andrade',
+      audioFile: 'veintecuatro.mp3'
     },
     {
       id: 25,
       name: 'Consuelo y Rafael',
-      slug: 'consuelo-y-rafael'
+      slug: 'consuelo-y-rafael',
+      audioFile: 'veintecinco.mp3'
     },
     {
       id: 26,
       name: 'Familia Espinoza Meza',
-      slug: 'familia-espinoza-meza'
+      slug: 'familia-espinoza-meza',
+      audioFile: 'veinteseis.mp3'
     },
     {
       id: 27,
       name: 'Familia Meza Matias',
-      slug: 'familia-meza-matias'
+      slug: 'familia-meza-matias',
+      audioFile: 'veintesiete.mp3'
     },
     {
       id: 28,
       name: 'Tia miros',
-      slug: 'tia-miros'
+      slug: 'tia-miros',
+      audioFile: 'veinteocho.mp3'
     },
     {
       id: 29,
       name: 'Tia Kika',
-      slug: 'tia-kika'
+      slug: 'tia-kika',
+      audioFile: 'veintenueve.mp3'
     },
     {
       id: 30,
       name: 'Karla y Gonzalo',
-      slug: 'karla-y-gonzalo'
+      slug: 'karla-y-gonzalo',
+      audioFile: 'treinta.mp3'
     },
     {
       id: 31,
       name: 'Belén y Efraín',
-      slug: 'efrain-y-belen'
+      slug: 'efrain-y-belen',
+      audioFile: 'treintauno.mp3'
     },
     {
       id: 32,
       name: 'Liz y Dario',
-      slug: 'dario-y-liz'
+      slug: 'dario-y-liz',
+      audioFile: 'treintados.mp3'
     },
     {
       id: 33,
       name: 'Paty y Familia Vega',
-      slug: 'dario-y-liz'
+      slug: 'dario-y-liz',
+      audioFile: 'treintatres.mp3'
     }
   ];
 
@@ -201,6 +251,8 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.updateCountdown();
     this.timer = window.setInterval(() => this.updateCountdown(), 1000);
+    document.addEventListener('click', this.unlockAudio, { passive: true });
+    document.addEventListener('touchstart', this.unlockAudio, { passive: true });
     this.routeSub = this.route.paramMap.subscribe((paramMap) => {
       setTimeout(() => {
         const param = paramMap.get('encodedNames');
@@ -210,9 +262,9 @@ export class AppComponent implements OnInit, OnDestroy {
           const guest = this.GUEST_LIST.find(item => item.id === idParam);
           this.names = guest?.name || '';
           this.speechText = 'Hola, ' + this.names + '. Te invitamos a compartir con nosotros este día tan especial, lleno de fe, amor y bendiciones. Acompáñanos en la celebración del Bautizo y la Primera Comunión de Aristeo y Karla.';
-          this.leerTexto(this.speechText);
-        } else {
-          this.leerTexto(this.texto);
+          if (guest?.audioFile) {
+            this.reproducirAudio(guest.audioFile, this.speechText);
+          } 
         }
       }, 500);
 
@@ -223,7 +275,16 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.timer) {
       window.clearInterval(this.timer);
     }
+    document.removeEventListener('click', this.unlockAudio);
+    document.removeEventListener('touchstart', this.unlockAudio);
+    this.audioPlayer?.pause();
+    this.audioPlayer = undefined;
+    window.speechSynthesis.cancel();
     this.routeSub?.unsubscribe();
+  }
+
+  playPendingAudio(): void {
+    this.unlockAudio();
   }
 
   copyInvite(): void {
@@ -284,22 +345,24 @@ export class AppComponent implements OnInit, OnDestroy {
     navigator.clipboard?.writeText(this.comidaAddress);
   }
 
-  leerTexto(texto: string): void {
-    if (!texto?.trim()) return;
+  private reproducirAudio(audioFile: string, fallbackText: string): void {
+    this.audioPlayer?.pause();
+    this.audioPlayer = new Audio(`/audios/${audioFile}`);
+    this.audioPlayer.load();
 
-    if (!('speechSynthesis' in window)) {
-      console.error('Este navegador no soporta síntesis de voz');
-      return;
-    }
+    void this.audioPlayer.play().catch((error) => {
+      if (error instanceof DOMException && error.name === 'NotAllowedError') {
+        this.pendingAudioFile = audioFile;
+        this.pendingFallbackText = fallbackText;
+        this.showPlayAudioButton = true;
+        return;
+      }
 
-    const mensaje = new SpeechSynthesisUtterance(texto);
-    mensaje.lang = 'es-MX';
-    mensaje.rate = 1;
-    mensaje.pitch = 0.7;
-    mensaje.volume = 19;
-
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(mensaje);
+      console.error(`No se pudo reproducir el audio ${audioFile}`, error);
+      this.pendingAudioFile = null;
+      this.pendingFallbackText = null;
+      this.showPlayAudioButton = false;
+    });
   }
 
   private updateCountdown(): void {

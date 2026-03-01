@@ -166,6 +166,12 @@
   color: #000000;
 }
 
+.invite__audio-action {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 1.5rem;
+}
+
 .invite__subtitle {
   max-width: 660px;
   margin: 0 auto 1.2rem;
